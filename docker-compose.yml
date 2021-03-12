@@ -1,0 +1,43 @@
+# docker-compose.yml
+version: '3.7'
+services:
+  wah_db:
+    container_name: wah_db
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+
+  wah_frontend:
+    container_name: wah_frontend
+    restart: on-failure
+    volumes:
+      - ./apps/frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        PORT: 3000
+        SOURCE_PATH: ./apps/frontend
+    command: npm run start
+    ports:
+      - 3000:3000
+
+  wah_backend:
+    container_name: wah_backend
+    restart: on-failure
+    volumes:
+      - ./apps/backend:/usr/src/app
+      - /usr/src/app/node_modules
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        PORT: 8080
+        SOURCE_PATH: ./apps/backend
+    command: npm run dev
+    ports:
+      - 8080:8080
+
