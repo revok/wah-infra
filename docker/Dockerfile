@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 COPY $SOURCE_PATH/package*.json ./
 
 # TODO: stop running as root and remove this unsafe perm flag
-RUN npm install --unsafe-perm
+RUN npm install --unsafe-perm --verbose
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH

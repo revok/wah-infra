@@ -3,11 +3,19 @@ version: '3.7'
 services:
   wah_db:
     container_name: wah_db
-    image: mongo
+    image: mongo:latest
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db-data:/data/db
+      - ./docker/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
 
   wah_frontend:
     container_name: wah_frontend
@@ -19,11 +27,13 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        PORT: 3000
+        PORT: ${FE_PORT}
         SOURCE_PATH: ./apps/frontend
+    environment:
+      PORT: ${FE_PORT}
     command: npm run start
     ports:
-      - 3000:3000
+      - ${FE_PORT}:${FE_PORT}
 
   wah_backend:
     container_name: wah_backend
@@ -35,9 +45,19 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        PORT: 8080
+        PORT: ${API_PORT}
         SOURCE_PATH: ./apps/backend
+    environment:
+      API_PORT: ${API_PORT}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+
     command: npm run dev
     ports:
-      - 8080:8080
+      - ${API_PORT}:${API_PORT}
+    depends_on:
+      - wah_db
 
