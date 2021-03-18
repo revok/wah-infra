@@ -76,7 +76,7 @@ git submodule update --init --recursive --remote # check out master branches.
 
 - Now start the containers by running `docker-compose up`. This will also create some dummy data.
 
-- You can now (hopefully) view the frontend at http://localhost:8080 and log in with username `test` and password `test`.
+- You can now (hopefully) view the frontend at http://localhost:8888 and log in with username `test` and password `test`.  (assuming default settings).
 
   
 
