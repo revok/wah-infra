@@ -3,7 +3,11 @@
 
   
 
+  
+
 # We are happy Infrastructure
+
+  
 
   
 
@@ -16,17 +20,24 @@ This project bundles the API, frontend and mongo into a single docker-compose pr
   
 
   
+
 ## Dependencies
 
   
 
-- [docker-compose](https://docs.docker.com/compose/install/) (developed with v1.24.0)
+  
+
+-  [docker-compose](https://docs.docker.com/compose/install/) (developed with v1.24.0)
+
   
 
 # Setup
 
- 
+  
+
 - Make sure you have [docker-compose](https://docs.docker.com/compose/install/) installed on your system.
+
+  
 
   
 
@@ -34,7 +45,11 @@ This project bundles the API, frontend and mongo into a single docker-compose pr
 
   
 
-- Run `update_projects.sh` (found inside directory 'scripts') to check out the main branches of the git submodules. If you can't run bash scripts (boo!) then do this instead:
+  
+
+- Run `update_projects.sh` (found inside directory 'scripts') to check out the main branches of the git submodules. If you can't run bash scripts, first examine your choices in life and then do this instead:
+
+  
 
   
 
@@ -43,24 +58,17 @@ This project bundles the API, frontend and mongo into a single docker-compose pr
   
 
 ```
-
-  
-
   
 
 git fetch && git pull
 
-  
-
-  
 
 git submodule update --init --recursive --remote # check out master branches.
 
-  
-
-  
 
 ```
+
+  
 
   
 
@@ -68,49 +76,42 @@ git submodule update --init --recursive --remote # check out master branches.
 
 - Now start the containers by running `docker-compose up`. This will also create some dummy data.
 
-  
-
-  
-
-You can now (hopefully) view the frontend at http://localhost:8080 and log in with username `test` and password `test`.
+- You can now (hopefully) view the frontend at http://localhost:8080 and log in with username `test` and password `test`.
 
   
 
   
-
   
 
 # Container access
-
-  
-
   
 
 If you need to get into a container, you can do that with `docker exec -it [container] /bin/bash` (or `docker exec -it [container] /bin/sh` if it's an alpine system).
 
-  
 
-  
-
-  
 
 ## Create a user
 
-  
-
-  
-
+ 
 If you need to create a user (you will need this to login in the frontend), you can send a POST request to `[api:port]/user/new` to register one through the API. Example:
 
   
 
   
 
+  
+
 ```
+
+  
 
 curl -X POST http://localhost:8080/user/new -H 'Content-Type: application/json' -d '{ "username": "admin", "password": "admin" }'
 
+  
+
 ```
+
+  
 
   
 
@@ -122,7 +123,11 @@ curl -X POST http://localhost:8080/user/new -H 'Content-Type: application/json' 
 
   
 
+  
+
 If you would like to insert different dummy data in the mongodb container, remove the 'data' folder if it's there (this folder is automatically created after setting up the docker infra) and edit the file mongo-init.sh (found in directory 'docker').
+
+  
 
   
 
