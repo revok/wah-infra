@@ -10,6 +10,7 @@ mongo --eval "
   db.entries.insert({ value: 2, createdAt: new Date(2021, 7, 13) });
   db.entries.insert({ value: 2, createdAt: new Date(2021, 2, 13) });
   db.entries.insert({ value: 1, createdAt: new Date(2021, 2, 3) });
+  db.entries.insert({ value: 0, createdAt: new Date(2021, 0, 3) });
   db.entries.insert({ value: 0, createdAt: new Date(2021, 2, 13) });
   db.entries.insert({ value: 0, createdAt: new Date(2021, 2, 6) });
   db.entries.insert({ value: 1, createdAt: new Date(2021, 2, 13) });
